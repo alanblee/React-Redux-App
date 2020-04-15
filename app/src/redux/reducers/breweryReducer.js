@@ -3,6 +3,16 @@ import { FETCH_BREWERIES } from "../types/breweryTypes";
 
 const initialState = {
   brews: [],
+  loading: false,
+  errors: "",
 };
 
-export default createReducer(initialState, {});
+const fetchBreweries = (state = initialState, payload) => {
+  return {
+    ...state,
+    brews: payload
+  }
+};
+export default createReducer(initialState, {
+  [FETCH_BREWERIES]: fetchBreweries,
+});
