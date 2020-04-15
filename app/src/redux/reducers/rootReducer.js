@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import breweryReducer from "./breweryReducer";
 
 const rootReducer = combineReducers({
-  brewery: breweryReducer,
+  breweryData: breweryReducer,
 });
 
 export default rootReducer;

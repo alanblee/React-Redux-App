@@ -10,9 +10,10 @@ const initialState = {
 const fetchBreweries = (state = initialState, payload) => {
   return {
     ...state,
-    brews: payload
-  }
+    brews: payload,
+  };
 };
+
 export default createReducer(initialState, {
   [FETCH_BREWERIES]: fetchBreweries,
 });
