@@ -62,56 +62,59 @@ class BrewMap extends Component {
     return (
       <div className="map-container">
         {brewery.length ? (
-          <div className="map"> 
-          <ReactMapGl
-            {...viewPort}
-            mapStyle="mapbox://styles/alanblee35/ck91u2y2b01j91ip89q563ix3"
-            mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-            onViewportChange={(viewPort) => {
-              this.setState({
-                viewPort,
-              });
-            }}
-          >
-            {brewery.map((pubs) => {
-              return (
-                <Marker
-                  key={pubs.id}
-                  latitude={Number(pubs.latitude)}
-                  longitude={Number(pubs.longitude)}
-                >
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      this.selectPub(pubs);
-                    }}
+          <div className="map">
+            <ReactMapGl
+              {...viewPort}
+              mapStyle="mapbox://styles/alanblee35/ck91u2y2b01j91ip89q563ix3"
+              mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+              onViewportChange={(viewPort) => {
+                this.setState({
+                  viewPort,
+                });
+              }}
+            >
+              {brewery.map((pubs) => {
+                return (
+                  <Marker
+                    key={pubs.id}
+                    latitude={Number(pubs.latitude)}
+                    longitude={Number(pubs.longitude)}
                   >
-                    <i className="fas fa-beer"></i>
-                  </button>
-                </Marker>
-              );
-            })}
-            {selectedPub ? (
-              <Popup
-                latitude={Number(selectedPub.latitude)}
-                longitude={Number(selectedPub.longitude)}
-                onClose={() => {
-                  this.setState({
-                    selectedPub: null,
-                  });
-                }}
-              >
-                <div className="popup-info">
-                  <h3>{selectedPub.name}</h3>
-                  <p> {selectedPub.street}</p>
-                  <p>{selectedPub.phone}</p>
-                </div>
-              </Popup>
-            ) : null}
-          </ReactMapGl>
+                    <i
+                      className="fas fa-beer"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        this.selectPub(pubs);
+                      }}
+                    ></i>
+                  </Marker>
+                );
+              })}
+              {selectedPub ? (
+                <Popup
+                  latitude={Number(selectedPub.latitude)}
+                  longitude={Number(selectedPub.longitude)}
+                  onClose={() => {
+                    this.setState({
+                      selectedPub: null,
+                    });
+                  }}
+                >
+                  <div className="popup-info">
+                    <h3>{selectedPub.name}</h3>
+                    <p> {selectedPub.street}</p>
+                    <p>{selectedPub.phone}</p>
+                  </div>
+                </Popup>
+              ) : null}
+            </ReactMapGl>
           </div>
         ) : null}
-        {selectedPub ? <BrewPub selectedPub={selectedPub} /> : <div className="hide"></div>}
+        {selectedPub ? (
+          <BrewPub selectedPub={selectedPub} />
+        ) : (
+          <div className="hide"></div>
+        )}
       </div>
     );
   }

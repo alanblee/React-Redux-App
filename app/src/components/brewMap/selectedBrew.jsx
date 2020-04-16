@@ -9,10 +9,20 @@ const BrewPub = ({ selectedPub }) => {
       </p>
       <p>{selectedPub.street}</p>
       <p>{selectedPub.phone}</p>
-      <ul>
-        
+      <ul className="social-links">
+        <li>
+          <i className="fab fa-facebook-f"></i>
+        </li>
+        <li>
+          <i className="fab fa-twitter"></i>
+        </li>
+        <li>
+          <i class="fab fa-chrome"></i>
+        </li>
+        <li>
+          <i class="fab fa-instagram-square"></i>
+        </li>
       </ul>
-      <p>{selectedPub.website_url}</p>
     </div>
   );
 };
