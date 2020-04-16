@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_BREWERIES} from "../types/breweryTypes";
+import { FETCH_BREWERIES } from "../types/breweryTypes";
 
 export const fetchBreweries = (input) => async (dispatch) => {
   try {

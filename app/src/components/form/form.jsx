@@ -35,7 +35,7 @@ const SearchForm = ({ fetchBreweries }) => {
         placeholder="Enter city"
       />
       <button className="form-submit">
-        <i className="fas fa-beer"></i>
+        Find Beer
       </button>
     </form>
   );

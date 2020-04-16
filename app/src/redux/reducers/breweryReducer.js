@@ -3,6 +3,7 @@ import { FETCH_BREWERIES } from "../types/breweryTypes";
 
 const initialState = {
   brews: [],
+  cityLocate: null,
   loading: false,
   errors: "",
 };

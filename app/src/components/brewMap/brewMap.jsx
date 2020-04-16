@@ -1,71 +1,96 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import ReactMapGl from "react-map-gl";
+import ReactMapGl, { Marker } from "react-map-gl";
 
 class BrewMap extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       viewPort: {
-        latitude: 39.9997,
-        longitude: -98.6785,
-        width: "50vw",
-        height: "50vh",
-        zoom: 3,
+        latitude: Number(this.props.brewery[0].latitude),
+        longitude: Number(this.props.brewery[0].longitude),
+        width: "100vw",
+        height: "100vh",
+        zoom: 10,
       },
     };
   }
-  // componentDidUpdate(prevProps) {
-  //   // console.log(prevProps.brewery);
-  //   if (prevProps.brewery.length > 1) {
-  //     if (this.props.brewery[0].latitude !== prevProps.brewery[0].latitude) {
-  //       console.log(this.props.brewery[0].latitude)
-  //       this.setState({
-  //         viewPort: {
-  //           ...this.state.viewPort,
-  //           latitude: this.props.brewery[0].latitude,
-  //           longitude: this.props.brewery[0].longitude,
-  //           zoom: 10,
-  //         },
-  //       });
-  //     }
-  //   }
-  // }
+  componentDidMount() {
+    const { brewery } = this.props;
+    const { viewPort } = this.state;
+
+    if (brewery.length > 1) {
+      this.setState({
+        ...viewPort,
+        latitude: Number(this.props.brewery[0].latitude),
+        longitude: Number(this.props.brewery[0].longitude),
+        zoom: 10,
+      });
+    }
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.brewery.length > 1) {
+      if (this.props.brewery[0].latitude !== prevProps.brewery[0].latitude) {
+        if (prevProps.brewery[0].latitude) {
+          this.setState({
+            viewPort: {
+              ...this.state.viewPort,
+              latitude: Number(this.props.brewery[0].latitude)
+                ? Number(this.props.brewery[0].latitude)
+                : Number(this.props.brewery[1].latitude),
+              longitude: Number(this.props.brewery[0].longitude)
+                ? Number(this.props.brewery[0].longitude)
+                : Number(this.props.brewery[1].longitude),
+              zoom: 10,
+            },
+          });
+        }
+      }
+    }
+  }
   render() {
     const { brewery } = this.props;
     const { viewPort } = this.state;
     return (
       <div>
-        {brewery.length > 1 && (
+        {brewery.length > 1 ? (
           <ReactMapGl
             {...viewPort}
             mapStyle="mapbox://styles/alanblee35/ck91u2y2b01j91ip89q563ix3"
             mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
             onViewportChange={(viewPort) => {
-              console.log(viewPort);
               this.setState({
                 viewPort,
               });
             }}
           >
-            markers here
+            {brewery.map((pubs) => {
+              return (
+                <Marker
+                  key={pubs.id}
+                  latitude={Number(pubs.latitude)}
+                  longitude={Number(pubs.longitude)}
+                >
+                  <button>
+                    <i className="fas fa-beer"></i>
+                  </button>
+                </Marker>
+              );
+            })}
           </ReactMapGl>
+        ) : (
+          <ReactMapGl
+            {...viewPort}
+            mapStyle="mapbox://styles/alanblee35/ck91u2y2b01j91ip89q563ix3"
+            mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+            onViewportChange={(viewPort) => {
+              this.setState({
+                viewPort,
+              });
+            }}
+          ></ReactMapGl>
         )}
       </div>
-
-      // <ReactMapGl
-      //   {...viewPort}
-      //   mapStyle="mapbox://styles/alanblee35/ck91u2y2b01j91ip89q563ix3"
-      //   mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-      //   onViewportChange={(viewPort) => {
-      //     console.log(viewPort);
-      //     this.setState({
-      //       viewPort,
-      //     });
-      //   }}
-      // >
-      //   markers here
-      // </ReactMapGl>
     );
   }
 }
