@@ -1,0 +1,43 @@
+.map-container {
+  display: flex;
+  margin: 5% auto;
+  width: 75%;
+  .map {
+    box-shadow: 2px 4px 10px black;
+    margin-right: 5%;
+  }
+  .popup-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    h3 {
+      font-size: 1rem;
+    }
+    p {
+      font-size: 0.5rem;
+    }
+  }
+
+  .hide {
+    width: 50%;
+    display: none;
+  }
+  .pub-info {
+    width: 80%;
+    padding: 3%;
+    box-shadow: 2px 4px 10px black;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+
+    h1 {
+      font-size: 2rem;
+    }
+    p {
+      font-size: 1.5rem;
+      margin-top: 2%;
+    }
+  }
+}

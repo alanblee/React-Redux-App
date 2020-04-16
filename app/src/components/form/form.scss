@@ -1,0 +1,59 @@
+$gradient-color: linear-gradient(
+  to right bottom,
+  rgba(115, 122, 31, 0.73) 0%,
+  rgba(63, 61, 85, 0.37) 100%
+);
+//form styles
+.form-wrapper {
+  height: 2.5rem;
+  padding: 3rem 0;
+  width: 50%;
+  margin: 0 auto;
+  //input
+  .form-input,
+  input[type="text"] {
+    width: 50%;
+    height: 2.25rem;
+    background-color: rgba(122, 132, 21, .5);
+    letter-spacing: 0.1rem;
+    border: 0.1em solid #fdfffc;
+    vertical-align: bottom;
+    color: #fff;
+    margin: 0;
+    font-size: 1em;
+    padding: 0.34em 0.5em;
+    border-radius: 0.5rem;
+    transition: all 0.5s;
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 10px #737a1f;
+    }
+    &::placeholder {
+      color: #fff;
+    }
+  }
+
+  .form-submit{
+  margin-left: 0.5rem;
+  min-width: 2rem;
+  border: 0.1rem solid #fdfffc;
+  width: 12%;
+  padding: 1%;
+  border-radius: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  color: #fcfcfc;
+  background: $gradient-color;
+  padding: 0.5em;
+  height: 2.25rem;
+  vertical-align: middle;
+  line-height: 1rem;
+  transition: all 0.3s;
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    background-color: rgba(36, 112, 89, 0.59);
+  }
+}
+}

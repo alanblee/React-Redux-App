@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ReactMapGl, { Marker, Popup } from "react-map-gl";
-
+import BrewPub from "./selectedBrew";
+import "./brewMap.scss";
 class BrewMap extends Component {
   constructor(props) {
     super(props);
@@ -9,8 +10,8 @@ class BrewMap extends Component {
       viewPort: {
         latitude: Number(this.props.brewery[0].latitude),
         longitude: Number(this.props.brewery[0].longitude),
-        width: "100vw",
-        height: "100vh",
+        width: "50vw",
+        height: "50vh",
         zoom: 10,
       },
       selectedPub: null,
@@ -30,7 +31,7 @@ class BrewMap extends Component {
     }
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.brewery.length > 1) {
+    if (prevProps.brewery.length) {
       if (this.props.brewery[0].latitude !== prevProps.brewery[0].latitude) {
         if (prevProps.brewery[0].latitude) {
           this.setState({
@@ -61,6 +62,7 @@ class BrewMap extends Component {
     return (
       <div className="map-container">
         {brewery.length ? (
+          <div className="map"> 
           <ReactMapGl
             {...viewPort}
             mapStyle="mapbox://styles/alanblee35/ck91u2y2b01j91ip89q563ix3"
@@ -93,16 +95,23 @@ class BrewMap extends Component {
               <Popup
                 latitude={Number(selectedPub.latitude)}
                 longitude={Number(selectedPub.longitude)}
+                onClose={() => {
+                  this.setState({
+                    selectedPub: null,
+                  });
+                }}
               >
                 <div className="popup-info">
-                  <h3>Name: {selectedPub.name}</h3>
-                  <p>Street: {selectedPub.street}</p>
-                  <p>Phone: {selectedPub.phone}</p>
+                  <h3>{selectedPub.name}</h3>
+                  <p> {selectedPub.street}</p>
+                  <p>{selectedPub.phone}</p>
                 </div>
               </Popup>
             ) : null}
           </ReactMapGl>
+          </div>
         ) : null}
+        {selectedPub ? <BrewPub selectedPub={selectedPub} /> : <div className="hide"></div>}
       </div>
     );
   }
