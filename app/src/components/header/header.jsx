@@ -5,8 +5,8 @@ import "./header.scss";
 
 const Header = () => {
   return (
-    <div>
-      helloworld
+    <div className="header-container">
+      <img src={require("../../beer.svg")} alt="" />
       <SearchForm />
     </div>
   );
