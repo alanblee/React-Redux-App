@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import ReactMapGl, { Marker } from "react-map-gl";
+import ReactMapGl, { Marker, Popup } from "react-map-gl";
 
 class BrewMap extends Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class BrewMap extends Component {
         height: "100vh",
         zoom: 10,
       },
+      selectedPub: null,
     };
   }
   componentDidMount() {
@@ -48,12 +49,18 @@ class BrewMap extends Component {
       }
     }
   }
+
+  selectPub = (pub) => {
+    this.setState({
+      selectedPub: pub,
+    });
+  };
   render() {
     const { brewery } = this.props;
-    const { viewPort } = this.state;
+    const { viewPort, selectedPub } = this.state;
     return (
-      <div>
-        {brewery.length > 1 ? (
+      <div className="map-container">
+        {brewery.length ? (
           <ReactMapGl
             {...viewPort}
             mapStyle="mapbox://styles/alanblee35/ck91u2y2b01j91ip89q563ix3"
@@ -71,25 +78,31 @@ class BrewMap extends Component {
                   latitude={Number(pubs.latitude)}
                   longitude={Number(pubs.longitude)}
                 >
-                  <button>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      this.selectPub(pubs);
+                    }}
+                  >
                     <i className="fas fa-beer"></i>
                   </button>
                 </Marker>
               );
             })}
+            {selectedPub ? (
+              <Popup
+                latitude={Number(selectedPub.latitude)}
+                longitude={Number(selectedPub.longitude)}
+              >
+                <div className="popup-info">
+                  <h3>Name: {selectedPub.name}</h3>
+                  <p>Street: {selectedPub.street}</p>
+                  <p>Phone: {selectedPub.phone}</p>
+                </div>
+              </Popup>
+            ) : null}
           </ReactMapGl>
-        ) : (
-          <ReactMapGl
-            {...viewPort}
-            mapStyle="mapbox://styles/alanblee35/ck91u2y2b01j91ip89q563ix3"
-            mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-            onViewportChange={(viewPort) => {
-              this.setState({
-                viewPort,
-              });
-            }}
-          ></ReactMapGl>
-        )}
+        ) : null}
       </div>
     );
   }

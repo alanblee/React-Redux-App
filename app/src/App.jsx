@@ -8,7 +8,7 @@ function App({ brewData }) {
   return (
     <div className="App">
       <Header />
-      {brewData.length > 1 ? <BrewMap/> : null}
+      {brewData.length ? <BrewMap/> : null}
     </div>
   );
 }
